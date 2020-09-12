@@ -62,28 +62,22 @@ describe 'CashRegister' do
       it 'returns a string error message that there is no discount to apply' do
         expect(cash_register.apply_discount).to eq("There is no discount to apply.")
       end
+    end
   end
-end
 
   describe '#items' do
     it 'returns an array containing all items that have been added' do
       new_register = CashRegister.new
-          new_register.add_item("tomato", 1.76, 3)
+      new_register.add_item("eggs", 1.99)
+      new_register.add_item("tomato", 1.76, 3)
       expect(new_register.items).to eq(["eggs", "tomato", "tomato", "tomato"])
     end
   end
 
   describe '#void_last_transaction' do
-    it 'subtracts the last item from the total' do
-      cash_register.add_item("apple", 0.99)
+    it 'subtracts the last transaction from the total' do
       cash_register.add_item("tomato", 1.76)
-   
-    end
-
-    it 'returns the total to 0.0 if all items have been removed' do
-      cash_register.add_item("tomato", 1.76, 2)
-      expect{cash_register.void_last_transaction}.to change{cash_register.total}.from(3.52).to(0.0)
+      expect{cash_register.void_last_transaction}.to change{cash_register.total}.from(1.76).to(0.0)
     end
   end
 end
-
